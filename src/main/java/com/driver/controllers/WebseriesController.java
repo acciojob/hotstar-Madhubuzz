@@ -1,70 +1,30 @@
-package com.driver.EntryDto;
-
-import com.driver.model.ProductionHouse;
-import com.driver.model.SubscriptionType;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-public class WebSeriesEntryDto {
+package com.driver.controllers;
 
 
-    private String seriesName;
+import com.driver.EntryDto.WebSeriesEntryDto;
+import com.driver.model.WebSeries;
+import com.driver.services.WebSeriesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-    private int ageLimit;
+@RestController
+@RequestMapping("/webseries")
+public class WebseriesController {
 
-    private double rating;
+    @Autowired
+    WebSeriesService webSeriesService;
 
-    private SubscriptionType subscriptionType; //This denotes with which of subscriptionType this webseries comes ie. BASIC,PRO, ELITE
+    @PostMapping("/add")
+    public int addWebSeries(WebSeriesEntryDto webSeriesEntryDto){
 
-    private Integer productionHouseId;
+        try{
+            return webSeriesService.addWebSeries(webSeriesEntryDto);
 
-    public WebSeriesEntryDto(String seriesName, int ageLimit, double rating, SubscriptionType subscriptionType, Integer productionHouseId) {
-        this.ageLimit = ageLimit;
-        this.seriesName = seriesName;
-        this.rating = rating;
-        this.subscriptionType = subscriptionType;
-        this.productionHouseId = productionHouseId;
+        }catch (Exception e){
+            return -1;
+        }
     }
 
-    public String getSeriesName() {
-        return seriesName;
-    }
-
-    public void setSeriesName(String seriesName) {
-        this.seriesName = seriesName;
-    }
-
-    public int getAgeLimit() {
-        return ageLimit;
-    }
-
-    public void setAgeLimit(int ageLimit) {
-        this.ageLimit = ageLimit;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public SubscriptionType getSubscriptionType() {
-        return subscriptionType;
-    }
-
-    public void setSubscriptionType(SubscriptionType subscriptionType) {
-        this.subscriptionType = subscriptionType;
-    }
-
-    public Integer getProductionHouseId() {
-        return productionHouseId;
-    }
-
-    public void setProductionHouseId(Integer productionHouseId) {
-        this.productionHouseId = productionHouseId;
-    }
 }
